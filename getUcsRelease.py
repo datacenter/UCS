@@ -21,7 +21,7 @@
 # Download UCS Manager releases from CCO.
 
 # positional arguments:
-#   version               UCS Manager version
+#   version               UCS Manager version (e.g. "2.2.1d", or "latest")
 
 # optional arguments:
 #   -h, --help            show this help message and exit
@@ -33,6 +33,7 @@
 #   -c, -r, --rack        Download C-Series image file
 #   -i, --infra           Download Infrastructure image file
 #   -a, --all             Download all image files
+#   -o PATH, --path PATH  Local path where to download files
 #   -v, --version         show program's version number and exit
 
 from UcsSdk import *
@@ -51,7 +52,7 @@ if __name__ == "__main__":
 	try:
 		parser = argparse.ArgumentParser(prog='getUcsRelease.py', description='Download UCS Manager releases from CCO.')
 		parser.add_argument('version', metavar='version', type=str, nargs=1,
-			help='UCS Manager version')
+			help='UCS Manager version (e.g. "2.2.1d", or "latest")')
 		parser.add_argument('-u', '--username', dest='username', action='store',
 			help='Cisco.com (CCO) Account Username')
 		parser.add_argument('-p', '--password', dest='password', action='store',
@@ -64,11 +65,11 @@ if __name__ == "__main__":
 			help='Download Infrastructure image file')
 		parser.add_argument('-a', '--all', dest='all_flag', action='store_true',
 			help='Download all image files')
-		parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
+		parser.add_argument('-o', '--path', dest='path', action='store',
+			help='Local path where to download files')
+		parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.1')
 
 		args = parser.parse_args()
-
-		#print args
 
 		imagelist = GetUcsCcoImageList(username=args.username, password=args.password)
 
@@ -106,8 +107,10 @@ if __name__ == "__main__":
 			print "Nothing to do! Exiting."
 
 		# Downloading images
+		if args.path == None:
+			args.path = '.'
 		for file in downloadlist:
-			GetUcsCcoImage(image=file, path=".")
+			GetUcsCcoImage(image=file, path=args.path)
 
 	except Exception, err:
 		print "Exception:", str(err)
