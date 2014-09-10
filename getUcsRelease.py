@@ -89,18 +89,18 @@ if __name__ == "__main__":
 		downloadlist = []
 		for image in imagelist:
 			if "ucs-k9-bundle-infra" in image.imageName:
-				if image.imageName[20:26] == args.version[0]:
-					if args.infra_flag:
+				if args.version[0] in image.imageName:
+					if args.infra_flag or args.all_flag:
 						downloadlist.append(image)
 
 			if "ucs-k9-bundle-b-series" in image.imageName:
-				if image.imageName[23:29] == args.version[0]:
-					if args.blade_flag:
+				if args.version[0] in image.imageName:
+					if args.blade_flag or args.all_flag:
 						downloadlist.append(image)
 
 			if "ucs-k9-bundle-c-series" in image.imageName:
-				if image.imageName[23:29] == args.version[0]:
-					if args.rack_flag:
+				if args.version[0] in image.imageName:
+					if args.rack_flag or args.all_flag:
 						downloadlist.append(image)
 
 		if downloadlist == []:
