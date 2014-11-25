@@ -15,7 +15,7 @@
 
 # This script downloads UCS Manager releases from CCO
 # usage: getUcsRelease.py [-h] [-u USERNAME] [-p PASSWORD] [-b] [-c] [-i] [-a]
-#                         [-v]
+#                         [-o PATH] [-v]
 #                         version
 
 # Download UCS Manager releases from CCO.
@@ -37,6 +37,7 @@
 #   -v, --version         show program's version number and exit
 
 from UcsSdk import *
+from UcsSdk import CcoImage
 import getpass
 import argparse
 
@@ -67,11 +68,11 @@ if __name__ == "__main__":
 			help='Download all image files')
 		parser.add_argument('-o', '--path', dest='path', action='store',
 			help='Local path where to download files')
-		parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.1')
+		parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.2')
 
 		args = parser.parse_args()
 
-		imagelist = GetUcsCcoImageList(username=args.username, password=args.password)
+		imagelist = CcoImage.GetUcsCcoImageList(username=args.username, password=args.password)
 
 		# Determining latest UCS version available on CCO
 		versionlist = []
@@ -110,7 +111,7 @@ if __name__ == "__main__":
 		if args.path == None:
 			args.path = '.'
 		for file in downloadlist:
-			GetUcsCcoImage(image=file, path=args.path)
+			CcoImage.GetUcsCcoImage(image=file, path=args.path)
 
 	except Exception, err:
 		print "Exception:", str(err)
