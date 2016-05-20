@@ -1,4 +1,4 @@
 UCS
 ===
 
-Unified Computing System (UCS) repo
+This is the Unified Computing System (UCS) repo
