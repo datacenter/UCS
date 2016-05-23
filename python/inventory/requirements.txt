@@ -1,2 +1,2 @@
-UcsSdk>=0.8.3
-xlwt>=1.0.0
+UcsSdk == 0.8.3
+xlwt >= 1.0.0
